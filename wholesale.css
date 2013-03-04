@@ -1,0 +1,29 @@
+body	{background:#efefef; padding:6px; margin:0; color:#333333; font-family:Verdana, Geneva, sans-serif; font-size:90%;}
+
+#appView	{margin:0;}
+
+#mastHead, #mainContentArea, mastFoot	{padding:6px;}
+
+#mainContentArea	{border:1px solid #cccccc; background:#ffffff; border-top-width:0;}
+
+#mastHead	{margin-bottom:6px;}
+#mastHead a	{text-decoration:none;}
+#mastHead a:hover	{text-decoration:underline; color:#eb8f00;}
+#mastHead .menu	{color:#cccccc; font-size:.85em;}
+#mastHead .menu a	{padding:0 6px;}
+
+#searchBar button	{padding:2px 6px; cursor:pointer;}
+#searchBar .productSearchKeyword	{width:50%}
+#searchBar.ui-widget-header	{padding:3px 6px !important;}
+
+.buyerLoggedIn .hideIfLoggedIn	{display:none;}
+
+.hideIfLoggedOut	{display:none;}
+
+.buyerLoggedIn .hideIfLoggedOut	{display: block;} /* may be 'block' */
+.buyerLoggedIn span.hideIfLoggedOut	{display: inline;} /* ensures inline on span elements */
+
+a	{color:#1c94c4;}
+a:hover	{color:#eb8f00;}
+
+#mastFoot	{font-size:.75em;}

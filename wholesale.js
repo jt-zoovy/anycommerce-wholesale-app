@@ -908,27 +908,27 @@ fallback is to just output the value.
 				if(pageType){infoObj.pageType = pageType} //pageType
 				else if(pageType == '')	{pageType = infoObj.pageType}
 				
-					
-				if(app.u.buyerIsAuthenticated() || app.ext.myRIA.u.thisPageIsViewable(infoObj))	{
-	
-
-	
-					app.ext.myRIA.u.handleSearchInput(pageType);
-	
-	//set some defaults.
-					infoObj.back = infoObj.back == 0 ? infoObj.back : -1; //0 is no 'back' action. -1 will add a pushState or hash change.
-					infoObj.performTransition = infoObj.performTransition || app.ext.myRIA.u.showtransition(infoObj,$old); //specific instances skip transition.
-					infoObj.state = 'onInits'; //needed for handleTemplateFunctions.
-	
-	//if there's history (all pages loads after first, execute the onDeparts functions.
-	//must be run before handleSandHOTW or history[0] will be this infoObj, not the last one.
+//if there's history (all pages loads after first, execute the onDeparts functions.
+//must be run before handleSandHOTW or history[0] will be this infoObj, not the last one.
 					if(!$.isEmptyObject(app.ext.myRIA.vars.hotw[0]))	{
 						app.ext.myRIA.u.handleTemplateFunctions($.extend(app.ext.myRIA.vars.hotw[0],{"state":"onDeparts"}))
 						}
 					app.ext.myRIA.u.handleSandHOTW(infoObj);
-	//handles the appnav. the ...data function must be run first because the display function uses params set by the function.
+//handles the appnav. the ...data function must be run first because the display function uses params set by the function.
 					app.ext.myRIA.u.handleAppNavData(infoObj);
 					app.ext.myRIA.u.handleAppNavDisplay(infoObj);
+
+
+				app.u.dump(" -> app.u.buyerIsAuthenticated(): "+app.u.buyerIsAuthenticated());
+				if(app.u.buyerIsAuthenticated() || app.ext.myRIA.u.thisPageIsViewable(infoObj))	{
+	
+					app.ext.myRIA.u.handleSearchInput(pageType);
+	
+//set some defaults.
+					infoObj.back = infoObj.back == 0 ? infoObj.back : -1; //0 is no 'back' action. -1 will add a pushState or hash change.
+					infoObj.performTransition = infoObj.performTransition || app.ext.myRIA.u.showtransition(infoObj,$old); //specific instances skip transition.
+					infoObj.state = 'onInits'; //needed for handleTemplateFunctions.
+	
 	
 	//				app.u.dump("showContent.infoObj: "); app.u.dump(infoObj);
 					switch(pageType)	{
@@ -1083,6 +1083,8 @@ fallback is to just output the value.
 				else	{
 					app.ext.myRIA.u.showLoginModal();
 					$('#loginSuccessContainer').empty(); //empty any existing login messaging (errors/warnings/etc)
+					$('#appPreView').hide();
+					$('#appView').show();
 //this code is here instead of in showLoginModal (currently) because the 'showCustomer' code is bound to the 'close' on the modal.
 					$('<button>').button().attr('id','modalLoginContinueButton').text('Continue').click(function(){
 						$('#loginFormForModal').dialog('close');
@@ -1453,6 +1455,7 @@ P.listID (buyer list id)
 					app.u.handleResourceQ(app.rq[i]);
 					app.rq.splice(i, 1); //remove once handled.
 					}
+
 				app.rq.push = app.u.handleResourceQ; //reassign push function to auto-add the resource.
 				if(typeof infoObj != 'object')	{infoObj = {}}
 				infoObj = this.detectRelevantInfoToPage(window.location.href); 
@@ -1506,13 +1509,21 @@ if(ps.indexOf('?') >= 1)	{
 
 
 
-
+//will look at the thisPageIsPublic variable to see if the info/show in infoObj is a publicly viewable page.
 			thisPageIsViewable : function(infoObj)	{
 				var r = false, //what is returned. true if page IS viewable. false if not.
-				pvo = app.ext.myRIA.vars.thisPageIsPublic; //shortcut
-				app.u.dump(" -> infoObj: "); app.u.dump(infoObj);
-				app.u.dump
-				if(infoObj && infoObj.pageType && infoObj.show && pvo[infoObj.pageType] && pvo[infoObj.pageType].indexOf(infoObj.show) > -1)	{r = true}
+				pvo = app.ext.myRIA.vars.thisPageIsPublic, //shortcut
+				ns; //namespace.  will = value of show, navcat or pid
+				
+				if(typeof infoObj === 'object')	{
+					if(infoObj.show){ns = 'show'}
+					else if(infoObj.navcat)	{ns='navcat'}
+					else if(infoObj.pid)	{ns='pid'}
+					else{}
+					if(infoObj.pageType && ns && pvo[infoObj.pageType] && pvo[infoObj.pageType].indexOf(infoObj[ns]) > -1)	{r = true}
+					}
+				else	{}
+				
 				
 				return r;
 				}, //thisPageIsViewable
