@@ -58,7 +58,10 @@ var myRIA = function() {
 			'shipAddressTemplate'],
 		"sotw" : {}, //state of the world. set to most recent page info object.
 		"hotw" : new Array(15), //history of the world. contains 15 most recent sotw objects.
-		"thisPageIsPublic" : {'company':['contact','about'],'customer':['create']},
+		"thisPageIsPublic" : {
+			'company':['contact','about'],
+			'customer':['create']
+			},
 		"session" : {
 			"recentSearches" : [],
 			"recentlyViewedItems" : [],
@@ -879,6 +882,17 @@ fallback is to just output the value.
 ////////////////////////////////////   ACTION [a]   \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
 		a : {
+
+
+			bulkAddItemsToCart : function($context)	{
+				if($context)	{
+					$("form",$context).each(function(){
+						//do something. but don't do it like this. key off of the input and a .edited when it changes/keyup.
+						});
+					}
+				else	{}
+				},
+
 
 
 //loads page content. pass in a type: category, product, customer or help

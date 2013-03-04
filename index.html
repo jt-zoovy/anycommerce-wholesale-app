@@ -73,11 +73,11 @@ app.u.loadScript(app.vars.baseURL+"init.js");
 <div id='appPreView'>
 <table>
 <tr>
-	<td><!-- put logo here --></td>
+	<td>YOUR LOGO HERE</td>
 	<td>
 
 	<div id="loader">
-		<h3>One moment please.</h3>
+		<h3>Loading our Wholesale Shopping App.</h3>
 
 		<div class='alignCenter'>
 		<progress id="appPreViewProgressBar" max="100" value="0" /><br />
@@ -209,7 +209,11 @@ don't modify the 'data-templateid' unless you are changing template names and up
 
 	<ul data-bind="var: category(@subcategoryDetail); format: categoryList; extension: store_navcats; loadsTemplate: categoryListTemplate; detail:max;" class='listStyleNone fluidList clearfix noPadOrMargin categoryList'></ul><!-- outputs a list of subcategories -->
 
-	<ul data-bind="var: category(@products); format: productList; editor: finder; extension: store_prodlist; loadsTemplate: productListTemplate; withReviews:1; items_per_page: 25;" class='listStyleNone fluidList clearfix noPadOrMargin productList'></ul><!-- outputs the product list -->
+	<table class='fullWidth gridTable'>
+
+	<tbody data-bind="var: category(@products); format: productList; editor: finder; extension: store_prodlist; loadsTemplate: productListBulkTemplate; withReviews:1; items_per_page: 100; withInventory:1; withVariations:1;"></tbody>
+
+	</table>
 
 </div>
 
@@ -269,6 +273,29 @@ remember to NOT put the button inside the 'onclick' container or two events will
 	
 </li>
 
+<table>
+<tr id='productListBulkTemplate' class='loadingBG prodlistRow '  >
+	<td>
+	<div class='prodThumbContainer' data-bind='var:product(pid); format:addPicSlider; extension:myRIA;' onClick="showContent('product',{'pid':$(this).closest('tr').attr('data-pid')})">
+		<img src='blank.gif' class='prodThumb' data-bind='var: product(zoovy:prod_image1); format:imageURL;' width='120' height='120' />
+	</div>
+	</td>
+	
+	<td>
+	<h5 data-bind='var: product(zoovy:prod_name); format:text;'></h5>
+	<div data-bind='var: reviews(reviews.average); format:addClass; className:review_;' class='reviewSprite'></div>
+	<form action='#'>
+	<fieldset data-bind='var: product(pid); format:atcVariations; extension:store_product;' class='borderNone'></fieldset>
+	<label>quantity: <input type='number' class='numberInput' min='0' step=".01" name='qty' /></label>
+	<input type='hidden' name='sku' value='' data-bind='var:product(pid); format:popVal;' size='4' />
+	<button>Add to cart</button>
+	</form>
+	</td>
+	
+	<td data-bind='var: product(zoovy:base_price); format:money; currencySign: $;  hideZero:true;'></td>
+
+</tr>
+</table>
 
 <!--
 for product lists with addToCart feature (accessories, for example)

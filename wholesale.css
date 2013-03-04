@@ -27,3 +27,20 @@ a	{color:#1c94c4;}
 a:hover	{color:#eb8f00;}
 
 #mastFoot	{font-size:.75em;}
+
+
+.positionRelative	{position:relative;}
+
+
+
+
+table.fullWidth	{width:100%;}
+/*
+Use this in a table where you want clear separation between rows and cells. This includes color differntiation in the rows. you don't need padded table set.
+*/
+.gridTable	{background:#cccccc; border-spacing:0 1px;}
+.gridTable td, .gridTable th, .gridTable tf	{padding:2px 10px 2px 2px; vertical-align:top;}
+.gridTable tr:nth-child(odd)	{background:#ffffff;}
+.gridTable tr:nth-child(even)	{background:#f0f0f0;}
+
+tr.prodlistRow .numberInput	{width:50px}

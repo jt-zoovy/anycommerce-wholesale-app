@@ -258,6 +258,32 @@ _gaq.push(['_trackEvent','Authentication','User Event','Logged in through Facebo
 					app.model.addDispatchToQ(obj,'immutable');
 					}
 				}, //appBuyerLogout
+
+
+
+			
+			cartItemAppend : {
+				init : function(obj,_tag)	{
+					var r = 0;
+					if(obj && obj.sku && obj.qty)	{
+						obj.uuid = app.u.guidGenerator();
+						this.dispatch(obj,_tag);
+						r = 1;
+						}
+					else	{
+						$('#globalMessaging').anymessage({'message':'Qty or SKU left blank in cartItemAppend'});
+						}
+					
+					return r;
+					},
+				dispatch : function(obj,_tag){
+					obj._tag = _tag;
+					obj._cmd = "cartItemAppend";
+					app.model.addDispatchToQ(obj,'immutable');
+					}
+				}, //cartItemAppend
+
+
 			
 			authAdminLogout : {
 				init : function(tagObj)	{
